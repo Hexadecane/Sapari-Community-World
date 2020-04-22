@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://modelsources/cat.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://scenes/Player.gd" type="Script" id=2]
+[ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+params_diffuse_mode = 4
+params_specular_mode = 4
+albedo_color = Color( 0, 0, 0, 1 )
+metallic_specular = 0.0
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 1, 0.4, 0.4, 1 )
+metallic_specular = 0.0
+
+[sub_resource type="SpatialMaterial" id=3]
+params_diffuse_mode = 4
+params_specular_mode = 4
+metallic_specular = 0.0
+
+[sub_resource type="SpatialMaterial" id=4]
+params_diffuse_mode = 4
+params_specular_mode = 4
+albedo_color = Color( 0, 0, 0, 1 )
+metallic_specular = 0.0
+
+[sub_resource type="CylinderShape" id=5]
+
+[node name="Player" type="KinematicBody"]
+script = ExtResource( 2 )
+
+[node name="PlayerMeshInstance" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = SubResource( 1 )
+material/1 = SubResource( 2 )
+material/2 = SubResource( 3 )
+material/3 = SubResource( 4 )
+
+[node name="Spatial" type="Spatial" parent="PlayerMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+
+[node name="PlayerCollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.66, 0, 0, 0, 1, 0, 0, 0, 0.66, 0, 1, 0 )
+shape = SubResource( 5 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+script = ExtResource( 3 )
+sensitivity = 0.25
+smoothness = 0.0
+privot = NodePath("../PlayerMeshInstance/Spatial")
+distance = 3.0
+collisions = false
+pitch_limit = 89
+movement = false
+use_gui = false
